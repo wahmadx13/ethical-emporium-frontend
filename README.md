@@ -1,5 +1,3 @@
-Full Video on YouTube [CodeCraftMERN](https://youtu.be/0A_tPdRdkDw)
-
 # Canim eCommerce
 
 > Discover a seamless shopping experience at our e-commerce haven. Browse an extensive selection of products from top brands, enjoy secure transactions, and relish swift deliveries. Elevate your online shopping journey with user-friendly navigation and exclusive deals. Shop effortlessly, anytime, anywhere, and redefine convenience with our digital marketplace.
@@ -8,7 +6,7 @@ Full Video on YouTube [CodeCraftMERN](https://youtu.be/0A_tPdRdkDw)
 
 Explore curated deals and trending products on our inviting e-commerce homepage. Instantly find what you need for a delightful shopping experience.
 
-![canim-ecommerce](./canim-ecommerce.png)
+![ethical-emporium](./ethical-emporium.png)
 
 ## Features
 
