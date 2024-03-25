@@ -37,13 +37,6 @@ const Signin = () => {
     }
   }, [isLoading, data, error]);
 
-  const handleSignin = async (e) => {
-    e.preventDefault();
-
-    signin({ email: e.target.email.value, password: e.target.password.value });
-    e.target.reset();
-  };
-
   return (
     <section className='w-screen h-screen flex justify-center items-center px-4'>
       <div className='max-w-md w-full flex flex-col gap-y-4 border p-8 rounded-primary'>
