@@ -4,6 +4,8 @@
         "LOGNIN",
         "NEXTAUTH",
         "placehold",
-        "TINYMCE"
+        "reduxjs",
+        "TINYMCE",
+        "unoptimized"
     ]
 }
