@@ -1,17 +1,3 @@
-/**
- * Title: Write a program using JavaScript on Page
- * Author: Hasibul Islam
- * Portfolio: https://devhasibulislam.vercel.app
- * Linkedin: https://linkedin.com/in/devhasibulislam
- * GitHub: https://github.com/devhasibulislam
- * Facebook: https://facebook.com/devhasibulislam
- * Instagram: https://instagram.com/devhasibulislam
- * Twitter: https://twitter.com/devhasibulislam
- * Pinterest: https://pinterest.com/devhasibulislam
- * WhatsApp: https://wa.me/8801906315901
- * Telegram: devhasibulislam
- * Date: 03, November 2023
- */
 
 "use client";
 
@@ -33,11 +19,11 @@ export default function Home() {
           <Banner1 />
           <Steps />
           <NewArrivals />
-          <Banner2 />
-          <ExpertChoice />
+          <Banner2 className='' />
+          <ExpertChoice className='' />
           <NicheExplorer />
           <Trending />
-          <Banner3 />
+          <Banner3 className='' />
         </main>
       </Main>
     </>
