@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { Toaster } from "react-hot-toast";
 import Auth from "./auth";
 import Providers from "./providers";
+import '@/utils/amplifyInit'
 import "./globals.css";
 
 export const metadata = {
@@ -31,7 +32,7 @@ export const metadata = {
   // },
 };
 
-export default function RootLayout({ children }: {children: ReactNode}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body>

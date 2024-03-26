@@ -1,41 +1,25 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { Formik, Form, Field } from "formik";
-import * as yup from "yup";
-import Spinner from "@/components/shared/Spinner";
 import Link from "next/link";
-import { useSignInMutation } from "@/services/auth/authApi";
+import { useRouter } from "next/navigation";
+import { Formik, Form } from "formik";
+import * as yup from "yup";
 import { toast } from "react-hot-toast";
+import Spinner from "@/components/shared/Spinner";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { login } from "../../../redux/features/authSlice";
 
 const Signin = () => {
   const router = useRouter();
-  const [signin, { isLoading, data, error }] = useSignInMutation();
+  const dispatch = useAppDispatch();
+
+  const { isLoading: authLoading } = useAppSelector((state) => state.auth);
 
   const signInSchema = yup.object().shape({
     email: yup.string().email("Email is invalid").required("Email is required"),
     password: yup.string().required("Password is Required"),
   });
-
-  useEffect(() => {
-    if (isLoading) {
-      toast.loading("Signing in...", { id: "signin" });
-    }
-
-    if (data) {
-      toast.success(data?.description, { id: "signin" });
-      localStorage.setItem("accessToken", data?.accessToken);
-
-      // open new tab
-      setTimeout(() => {
-        window.open("/", "_self");
-      }, 1000);
-    }
-    if (error?.data) {
-      toast.error(error?.data?.description, { id: "signin" });
-    }
-  }, [isLoading, data, error]);
 
   return (
     <section className='w-screen h-screen flex justify-center items-center px-4'>
@@ -58,9 +42,18 @@ const Signin = () => {
             password: "",
           }}
           validationSchema={signInSchema}
-          onSubmit={(values) => {
-            // same shape as initial values
-            console.log(values);
+          onSubmit={async (values) => {
+            const response = await dispatch(
+              login({ username: values.email, password: values.password })
+            );
+            if (response?.error?.message === "Rejected") {
+              toast.error(response?.payload?.message, {
+                id: "signin",
+              });
+            }
+            if (authLoading) {
+              toast.loading("Signing in...", { id: "signin" });
+            }
           }}>
           {({ errors, touched, handleChange, handleBlur }) => {
             const hasErrors =
@@ -103,9 +96,9 @@ const Signin = () => {
                 ) : null}
                 <button
                   type='submit'
-                  disabled={isLoading || hasErrors}
+                  disabled={authLoading || hasErrors}
                   className='py-2 border border-black rounded-secondary bg-black hover:bg-black/90 text-white transition-colors drop-shadow disabled:bg-gray-200 disabled:border-gray-200 disabled:text-black/50 disabled:cursor-not-allowed flex flex-row justify-center items-center text-sm'>
-                  {isLoading ? <Spinner /> : "Sign In"}
+                  {authLoading ? <Spinner /> : "Sign In"}
                 </button>
               </Form>
             );

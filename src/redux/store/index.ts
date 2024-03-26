@@ -1,7 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { canimApi } from "@/services/canim";
 import { setupListeners } from "@reduxjs/toolkit/query";
-import authSlice from "@/features/auth/authSlice";
+// import authSlice from "@/features/auth/authSlice";
+import authSlice from "../features/authSlice";
 import productFilterSlice from "@/features/productFilter/productFilterSlice";
 import brandSlice from "@/features/brand/brandSlice";
 import productSlice from "@/features/product/productSlice";
