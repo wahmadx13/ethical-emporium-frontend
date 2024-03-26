@@ -1,6 +1,6 @@
 "use client";
-import { useEffect, useRef } from "react";
-import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import { getCurrentUser } from "aws-amplify/auth";
 import Spinner from "@/components/shared/Spinner";
 
@@ -8,15 +8,13 @@ import React from "react";
 
 const RefreshAuth = () => {
   const router = useRouter();
-  const prevRouteRef = useRef<string | null>(null);
+  const pathname = usePathname();
   useEffect(() => {
-    prevRouteRef.current = router.asPath;
     const checkAuth = async () => {
       try {
         await getCurrentUser();
         console.log("User is authenticated");
-        const prevRoute = prevRouteRef.current;
-        router.replace(prevRoute || "/");
+        router.replace("/");
       } catch (err) {
         console.log("error in /auth/refresh-auth", err);
         console.log("clearing cookies");
@@ -39,13 +37,17 @@ const RefreshAuth = () => {
         document.cookie = `CognitoIdentityServiceProvider.${process.env.NEXT_USER_POOL_CLIENT_ID}.${userId}.refreshToken =; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
 
         document.cookie = `CognitoIdentityServiceProvider.${process.env.NEXT_USER_POOL_CLIENT_ID}.${userId}.userData =; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
-        console.log("redirecting to signin");
-        router.replace("/auth/sign-in");
+        console.log("redirecting to signin", pathname);
+        if (pathname.includes("/dashboard")) {
+          router.replace("/auth/signin");
+        } else {
+          router.replace(pathname);
+        }
       }
     };
     console.log("In Refresh Auth");
     checkAuth();
-  }, [router]);
+  }, [pathname, router]);
   return <Spinner className='' />;
 };
 

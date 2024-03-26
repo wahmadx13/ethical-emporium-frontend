@@ -1,24 +1,52 @@
 import Signup from "@/components/icons/Signup";
 import Link from "next/link";
+import { useRouter, usePathname } from "next/navigation";
 import React, { useState } from "react";
-import { FaUserCheck } from "react-icons/fa6";
 import { BiUserCheck } from "react-icons/bi";
+import { FcGlobe } from "react-icons/fc";
 import OutsideClick from "../OutsideClick";
 import User from "@/components/icons/User";
 import Signin from "@/components/icons/Signin";
 import ForgotPassword from "@/components/icons/ForgotPassword";
 import Logout from "@/components/icons/Logout";
-import { useAppSelector } from "@/redux/hooks";
-import Image from "next/image";
+import { useAppSelector, useAppDispatch } from "@/redux/hooks";
+import { logout } from "@/redux/features/authSlice";
 
 const Auth = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useAppSelector((state) => state.auth);
 
-  const nameArray = user?.name.split(" ");
+  const router = useRouter();
+  const pathname = usePathname();
+  const dispatch = useAppDispatch();
+
+  //Extracting initials from name for display purpose
+  const nameArray = user?.name?.split(" ");
   console.log("user", nameArray);
   const initials = nameArray?.map((name: string) => name.charAt(0));
   const combinedInitials = initials?.join("");
+
+  //Logout handler
+  const handleLogout = async (global: boolean) => {
+    //Clearing cookies
+    document.cookie.split(";").forEach((c) => {
+      document.cookie = c
+        .replace(/^ +/, "")
+        .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+    });
+    //Clearing localStorage
+    localStorage.clear();
+
+    //Clearing sessionStorage
+    sessionStorage.clear();
+    //Sign out from Amplify
+    await dispatch(logout(global));
+
+    if (pathname.includes("/dashboard")) {
+      router.push("/");
+    }
+  };
+
   return (
     <>
       <button
@@ -30,7 +58,7 @@ const Auth = () => {
         <OutsideClick
           onOutsideClick={() => setIsOpen(false)}
           className='absolute top-full right-0 w-80 h-fit bg-white border rounded p-2 flex flex-col gap-y-2.5'>
-          {Object.keys(user).length === 0 ? (
+          {!user ? (
             <>
               <Link
                 href='/auth/signup'
@@ -96,12 +124,20 @@ const Auth = () => {
                 </span>
                 <article
                   className='whitespace-nowrap'
-                  onClick={() => {
-                    localStorage.removeItem("accessToken");
-                    window.location.reload();
-                  }}>
+                  onClick={() => handleLogout(false)}>
                   <h2 className='text-sm'>Logout</h2>
                   <p className='text-xs'>Clear your current activities</p>
+                </article>
+              </div>
+              <div className='w-full flex flex-row items-start gap-x-2 p-2 border border-transparent hover:border-black rounded cursor-pointer'>
+                <span className='bg-sky-500/5 p-1 rounded text-2xl'>
+                  <FcGlobe className='border-sky-500/5' />
+                </span>
+                <article
+                  className='whitespace-nowrap'
+                  onClick={() => handleLogout(true)}>
+                  <h2 className='text-sm'>Global Logout</h2>
+                  <p className='text-xs'>Logout from all devices</p>
                 </article>
               </div>
             </div>

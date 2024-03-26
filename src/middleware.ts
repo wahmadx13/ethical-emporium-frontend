@@ -7,15 +7,15 @@ export default async function middleware(request: NextRequest) {
 
     const data = await verifyRequestInMiddleware(request);
     console.log("\nMiddleware after verification");
-    if (!data?.data) {
+    if (!data?.data && request.url.includes("/dashboard")) {
       return NextResponse.redirect(
-        new URL(`${process.env.NEXTAUTH_URL}/auth/sign-in`, request.url)
+        new URL(`${process.env.NEXTAUTH_URL}/auth/signin`, request.url)
       );
     }
-
-    if (request.url.includes("/auth")) {
+    
+    if (data?.data && request.url.includes("/auth")) {
       return NextResponse.redirect(
-        new URL(`${process.env.NEXTAUTH_URL}/admin/dashboard`, request.url)
+        new URL(`${process.env.NEXTAUTH_URL}/`, request.url)
       );
     }
 
@@ -40,9 +40,13 @@ export default async function middleware(request: NextRequest) {
       return NextResponse.next();
     }
 
-    return NextResponse.redirect(
-      new URL(`${process.env.NEXTAUTH_URL}/auth/sign-in`, request.url)
-    );
+    if (request.url.includes('/dashboard')) { 
+      return NextResponse.redirect(
+        new URL(`${process.env.NEXTAUTH_URL}/auth/signin`, request.url)
+      );
+    }
+
+
   }
 }
 

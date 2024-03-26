@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { CognitoIdTokenPayload } from "aws-jwt-verify/jwt-model";
-import { signIn, type SignInInput } from "aws-amplify/auth";
+import { signIn, signOut, type SignInInput } from "aws-amplify/auth";
 import { IAuthInitialState } from "@/redux/@types/auth";
 
 const initialState: IAuthInitialState = {
@@ -13,6 +13,7 @@ const initialState: IAuthInitialState = {
   error: null,
 };
 
+//Login user
 export const login = createAsyncThunk(
   "auth/login",
   async ({ username, password }: SignInInput, thunkApi) => {
@@ -20,6 +21,19 @@ export const login = createAsyncThunk(
       return await signIn({ username, password });
     } catch (err) {
       console.log("Error while signing in: ", err);
+      return thunkApi.rejectWithValue(err);
+    }
+  }
+);
+
+//Logout user
+export const logout = createAsyncThunk(
+  "auth/logout",
+  async (global: boolean, thunkApi) => {
+    try {
+      return await signOut({ global: global });
+    } catch (err) {
+      console.log("Error while logging out: ", err);
       return thunkApi.rejectWithValue(err);
     }
   }
@@ -38,6 +52,7 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      //Cases for logging user in
       .addCase(login.pending, (state) => {
         state.isLoading = true;
         state.isSuccess = false;
@@ -46,13 +61,38 @@ export const authSlice = createSlice({
       .addCase(
         login.fulfilled,
         (state, action: PayloadAction<CognitoIdTokenPayload | any>) => {
-          state.isSuccess = action.payload;
+          state.isSuccess = true;
+          state.user = action.payload;
           state.isLoading = false;
           state.isError = false;
         }
       )
       .addCase(
         login.rejected,
+        (state, action: PayloadAction<CognitoIdTokenPayload | any>) => {
+          state.isSuccess = false;
+          state.isLoading = false;
+          state.isError = true;
+          state.error = action || "An error occurred";
+        }
+      )
+      //Cases for logging user out
+      .addCase(logout.pending, (state) => {
+        state.isLoading = true;
+        state.isSuccess = false;
+        state.isError = false;
+      })
+      .addCase(
+        logout.fulfilled,
+        (state, action: PayloadAction<CognitoIdTokenPayload | any>) => {
+          state.isSuccess = true;
+          state.user = null;
+          state.isLoading = false;
+          state.isError = false;
+        }
+      )
+      .addCase(
+        logout.rejected,
         (state, action: PayloadAction<CognitoIdTokenPayload | any>) => {
           state.isSuccess = false;
           state.isLoading = false;
