@@ -1,8 +1,10 @@
 import { ReactNode } from "react";
 import { Toaster } from "react-hot-toast";
+import { headers } from "next/headers";
+import { CognitoIdTokenPayload } from "aws-jwt-verify/jwt-model";
 import Auth from "./auth";
 import Providers from "./providers";
-import '@/utils/amplifyInit'
+import "@/utils/amplifyInit";
 import "./globals.css";
 
 export const metadata = {
@@ -32,12 +34,23 @@ export const metadata = {
   // },
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  const requestHeaders = await headers();
+  const userData: CognitoIdTokenPayload = JSON.parse(
+    requestHeaders.get("USER-DATA")
+  );
+  const jwtToken: string = requestHeaders.get("JWT-TOKEN");
   return (
-    <html lang="en">
+    <html lang='en'>
       <body>
         <Providers>
-          <Auth>{children}</Auth>
+          <Auth userData={userData} jwtToken={jwtToken}>
+            {children}
+          </Auth>
           <Toaster />
         </Providers>
       </body>

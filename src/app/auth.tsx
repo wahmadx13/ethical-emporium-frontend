@@ -1,28 +1,27 @@
 "use client";
 
 import { ReactNode, useEffect, useMemo } from "react";
-import { useDispatch } from "react-redux";
-import { usePersistLoginQuery } from "@/services/auth/authApi";
-import { addUser } from "@/features/auth/authSlice";
-import { toast } from "react-hot-toast";
+import { CognitoIdTokenPayload } from "aws-jwt-verify/jwt-model";
 import { amplifyInit } from "@/utils/amplifyInit";
+import { useAppDispatch } from "@/redux/hooks";
+import { setUser, setJwtToken } from "@/redux/features/authSlice";
 
-const Auth = ({ children }: {children: ReactNode}) => {
-  amplifyInit()
-  // const dispatch = useDispatch();
-  // const { data: userData, error: userError } = usePersistLoginQuery();
-  // const user = useMemo(() => userData?.data || {}, [userData]);
-
-  // useEffect(() => {
-  //   if (userData && !userError) {
-  //     toast.success(userData?.description, { id: "auth" });
-  //     dispatch(addUser(user));
-  //   }
-
-  //   if (userError?.data) {
-  //     toast.error(userError?.data?.description, { id: "auth" });
-  //   }
-  // }, [userData, userError, dispatch, user]);
+const Auth = ({
+  children,
+  userData,
+  jwtToken,
+}: {
+  children: ReactNode;
+  userData: CognitoIdTokenPayload;
+  jwtToken: string;
+}) => {
+  const dispatch = useAppDispatch();
+  amplifyInit();
+  useEffect(() => {
+    console.log("userData", userData);
+    dispatch(setUser(userData));
+    dispatch(setJwtToken(jwtToken));
+  }, [dispatch, jwtToken, userData]);
 
   return <>{children}</>;
 };

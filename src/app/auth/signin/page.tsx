@@ -15,9 +15,11 @@ const Signin = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const { isLoading: authLoading, error } = useAppSelector(
-    (state) => state.auth
-  );
+  const {
+    isLoading: authLoading,
+    isSuccess: authSuccess,
+    error,
+  } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     if (error) {
@@ -30,7 +32,11 @@ const Signin = () => {
         toast.loading("Signing in...", { id: "signin" });
       }
     }
-  }, [authLoading, error]);
+    if (authSuccess) {
+      toast.success("Sign in success!", { id: "signin" });
+      router.push("/");
+    }
+  }, [authLoading, authSuccess, error, router]);
 
   const signInSchema = yup.object().shape({
     email: yup.string().email("Email is invalid").required("Email is required"),
