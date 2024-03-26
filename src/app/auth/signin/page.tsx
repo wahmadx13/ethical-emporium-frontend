@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -9,12 +9,28 @@ import { toast } from "react-hot-toast";
 import Spinner from "@/components/shared/Spinner";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { login } from "../../../redux/features/authSlice";
+import { ILoginProps } from "@/@types/authentication";
 
 const Signin = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const { isLoading: authLoading } = useAppSelector((state) => state.auth);
+  const { isLoading: authLoading, error } = useAppSelector(
+    (state) => state.auth
+  );
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error.payload.message, {
+        id: "signin",
+      });
+    }
+    if (authLoading) {
+      if (authLoading) {
+        toast.loading("Signing in...", { id: "signin" });
+      }
+    }
+  }, [authLoading, error]);
 
   const signInSchema = yup.object().shape({
     email: yup.string().email("Email is invalid").required("Email is required"),
@@ -42,18 +58,9 @@ const Signin = () => {
             password: "",
           }}
           validationSchema={signInSchema}
-          onSubmit={async (values) => {
-            const response = await dispatch(
-              login({ username: values.email, password: values.password })
-            );
-            if (response?.error?.message === "Rejected") {
-              toast.error(response?.payload?.message, {
-                id: "signin",
-              });
-            }
-            if (authLoading) {
-              toast.loading("Signing in...", { id: "signin" });
-            }
+          onSubmit={async (values: ILoginProps) => {
+            const { email, password } = values;
+            await dispatch(login({ username: email, password: password }));
           }}>
           {({ errors, touched, handleChange, handleBlur }) => {
             const hasErrors =
@@ -98,7 +105,7 @@ const Signin = () => {
                   type='submit'
                   disabled={authLoading || hasErrors}
                   className='py-2 border border-black rounded-secondary bg-black hover:bg-black/90 text-white transition-colors drop-shadow disabled:bg-gray-200 disabled:border-gray-200 disabled:text-black/50 disabled:cursor-not-allowed flex flex-row justify-center items-center text-sm'>
-                  {authLoading ? <Spinner /> : "Sign In"}
+                  {authLoading ? <Spinner className='' /> : "Sign In"}
                 </button>
               </Form>
             );

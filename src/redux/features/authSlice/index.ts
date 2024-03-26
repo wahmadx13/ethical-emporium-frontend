@@ -57,7 +57,7 @@ export const authSlice = createSlice({
           state.isSuccess = false;
           state.isLoading = false;
           state.isError = true;
-          state.error = action.payload?.message || "An error occurred";
+          state.error = action || "An error occurred";
         }
       );
   },

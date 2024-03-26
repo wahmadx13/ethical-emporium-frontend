@@ -6,5 +6,5 @@ export interface IAuthInitialState {
   isError: boolean;
   isLoading: boolean;
   isSuccess: boolean;
-  error: unknown;
+  error: any;
 }

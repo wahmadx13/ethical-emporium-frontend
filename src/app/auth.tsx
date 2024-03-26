@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { ReactNode, useEffect, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import { usePersistLoginQuery } from "@/services/auth/authApi";
 import { addUser } from "@/features/auth/authSlice";
 import { toast } from "react-hot-toast";
 import { amplifyInit } from "@/utils/amplifyInit";
 
-const Auth = ({ children }) => {
+const Auth = ({ children }: {children: ReactNode}) => {
   amplifyInit()
   // const dispatch = useDispatch();
   // const { data: userData, error: userError } = usePersistLoginQuery();
