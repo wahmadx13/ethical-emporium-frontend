@@ -11,6 +11,7 @@ import ForgotPassword from "@/components/icons/ForgotPassword";
 import Logout from "@/components/icons/Logout";
 import { useAppSelector, useAppDispatch } from "@/redux/hooks";
 import { logout } from "@/redux/features/authSlice";
+import toast from "react-hot-toast";
 
 const Auth = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,21 +30,26 @@ const Auth = () => {
   //Logout handler
   const handleLogout = async (global: boolean) => {
     //Clearing cookies
-    document.cookie.split(";").forEach((c) => {
-      document.cookie = c
-        .replace(/^ +/, "")
-        .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
-    });
-    //Clearing localStorage
-    localStorage.clear();
+    try {
+      document.cookie.split(";").forEach((c) => {
+        document.cookie = c
+          .replace(/^ +/, "")
+          .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+      });
+      //Clearing localStorage
+      localStorage.clear();
 
-    //Clearing sessionStorage
-    sessionStorage.clear();
-    //Sign out from Amplify
-    await dispatch(logout(global));
+      //Clearing sessionStorage
+      sessionStorage.clear();
+      //Sign out from Amplify
+      await dispatch(logout(global));
+      toast.success("Signed out successfully!", { id: "signout" });
 
-    if (pathname.includes("/dashboard")) {
-      router.push("/");
+      if (pathname.includes("/dashboard")) {
+        router.push("/");
+      }
+    } catch (err) {
+      console.log("error while signing out", err);
     }
   };
 
