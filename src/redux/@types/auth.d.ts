@@ -25,6 +25,7 @@ export interface IUser extends Partial<CognitoIdTokenPayload> {
 
 export interface IAuthInitialState {
   user: IUser;
+  username: string;
   jwtToken?: string;
   isError: boolean;
   isLoading: boolean;

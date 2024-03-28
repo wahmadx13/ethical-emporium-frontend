@@ -6,6 +6,7 @@ import { IAuthInitialState } from "@/redux/@types/auth";
 
 const initialState: IAuthInitialState = {
   user: null,
+  username: null,
   jwtToken: null,
   isError: false,
   isLoading: false,
@@ -48,6 +49,9 @@ export const authSlice = createSlice({
     },
     setJwtToken: (state, action: PayloadAction<string>) => {
       state.jwtToken = action.payload;
+    },
+    setUsername: (state, action) => {
+      state.username = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -103,5 +107,5 @@ export const authSlice = createSlice({
   },
 });
 
-export const { setUser, setJwtToken } = authSlice.actions;
+export const { setUser, setJwtToken, setUsername } = authSlice.actions;
 export default authSlice.reducer;
