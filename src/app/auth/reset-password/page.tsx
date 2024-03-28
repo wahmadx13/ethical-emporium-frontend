@@ -33,7 +33,7 @@ const ResetPassword = () => {
       .string()
       .required("Password is required")
       .min(8, "Password characters must be eight characters long")
-      .max(15, "Password characters must exceed fifteen characters")
+      .max(15, "Password characters must not exceed fifteen characters")
       .matches(/[0-9]/, "Password must contain at least one number")
       .matches(
         /[A-Z]/,
