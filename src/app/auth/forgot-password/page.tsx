@@ -41,7 +41,7 @@ const ResetPassword = () => {
             email: "",
           }}
           validationSchema={resetPasswordSchema}
-          onSubmit={async (values) => {
+          onSubmit={async (values: { email: string }) => {
             const { email } = values;
             try {
               setIsLoading(true);
