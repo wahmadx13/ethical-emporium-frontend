@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 import Image from "next/image";
 import Link from "next/link";
-import { confirmSignUp, type ConfirmSignUpInput } from "aws-amplify/auth";
+import { confirmSignUp } from "aws-amplify/auth";
 import { Formik, Form } from "formik";
 import * as yup from "yup";
 import { useRouter } from "next/navigation";

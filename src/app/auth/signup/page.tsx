@@ -96,7 +96,7 @@ const Signup = () => {
                 { id: "signup" }
               );
               setIsLoading(false);
-            } catch (err) {
+            } catch (err: any) {
               setIsLoading(false);
               toast.error(err.message, { id: "signup" });
             }
