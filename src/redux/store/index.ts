@@ -4,7 +4,9 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 // import authSlice from "@/features/auth/authSlice";
 import authSlice from "../features/authSlice";
 import productFilterSlice from "@/features/productFilter/productFilterSlice";
-import brandSlice from "@/features/brand/brandSlice";
+import productCategorySlice from "../features/productCategorySlice";
+import brandSlice from "../features/brandSlice";
+import blogSlice from "../features/blogSlice";
 import productSlice from "@/features/product/productSlice";
 import categorySlice from "@/features/category/categorySlice";
 import storeSlice from "@/features/store/storeSlice";
@@ -18,8 +20,10 @@ export const makeStore = () => {
     reducer: {
       [canimApi.reducerPath]: canimApi.reducer,
       auth: authSlice,
+      productCategory: productCategorySlice,
       brand: brandSlice,
       category: categorySlice,
+      blog: blogSlice,
       product: productSlice,
       store: storeSlice,
       favorite: favoriteSlice,
