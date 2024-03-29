@@ -121,7 +121,7 @@ const Categories = () => {
                     <>
                       {categories.map((category) => (
                         <div
-                          key={category?._id}
+                          key={category?._id.toString()}
                           className='w-full flex flex-row items-start gap-x-2 p-2 border border-transparent hover:border-black rounded cursor-pointer'
                           onClick={() => {
                             router.push("/products?category=" + category?._id);
@@ -167,7 +167,7 @@ const Categories = () => {
                     <>
                       {brands.map((brand) => (
                         <div
-                          key={brand?._id}
+                          key={brand?._id.toString()}
                           className='w-full flex flex-row items-start gap-x-2 p-2 border border-transparent hover:border-black rounded cursor-pointer'
                           onClick={() => {
                             router.push("/products?brand=" + brand?._id);
@@ -213,7 +213,7 @@ const Categories = () => {
                     <>
                       {blogs.map((blog) => (
                         <div
-                          key={blog?._id}
+                          key={blog?._id.toString()}
                           className='w-full flex flex-row items-start gap-x-2 p-2 border border-transparent hover:border-black rounded cursor-pointer'
                           onClick={() => {
                             router.push("/products?store=" + blog?._id);
