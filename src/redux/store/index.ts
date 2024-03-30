@@ -7,7 +7,7 @@ import productFilterSlice from "@/features/productFilter/productFilterSlice";
 import productCategorySlice from "../features/productCategorySlice";
 import brandSlice from "../features/brandSlice";
 import blogSlice from "../features/blogSlice";
-import productSlice from "@/features/product/productSlice";
+import productSlice from "../features/productSlice";
 import categorySlice from "@/features/category/categorySlice";
 import storeSlice from "@/features/store/storeSlice";
 import favoriteSlice from "@/features/favorite/favoriteSlice";
