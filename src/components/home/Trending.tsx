@@ -8,8 +8,15 @@ import { useRouter } from "next/navigation";
 import { useGetProductsQuery } from "@/services/product/productApi";
 import ProductCard from "../shared/skeletonLoading/ProductCard";
 import { toast } from "react-hot-toast";
+import { IProduct } from "@/redux/@types/product";
 
-const Trending = ({ products, productsLoading }) => {
+const Trending = ({
+  products,
+  productsLoading,
+}: {
+  products: IProduct[];
+  productsLoading: boolean;
+}) => {
   const router = useRouter();
   const trending = useMemo(
     () => products?.filter((product) => product?.trending === true) || [],
@@ -18,7 +25,7 @@ const Trending = ({ products, productsLoading }) => {
 
   console.log("newArrivals", trending);
   return (
-    <Container>
+    <Container className=''>
       <section className='flex flex-col gap-y-10'>
         <div className='flex flex-col gap-y-1'>
           <h1 className='text-4xl'>
@@ -39,7 +46,7 @@ const Trending = ({ products, productsLoading }) => {
             ) : (
               <>
                 {products?.slice(-8)?.map((product, index) => (
-                  <Card key={index} product={product} />
+                  <Card key={product?._id.toString()} product={product} />
                 ))}
               </>
             )}

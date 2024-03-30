@@ -15,7 +15,7 @@ const Card = ({
   product,
   ...rest
 }: {
-  index: number;
+  index?: number;
   product: IProduct;
 }) => {
   const router = useRouter();
