@@ -36,11 +36,7 @@ export default function Home() {
           <Steps />
           <NewArrivals products={products} productsLoading={productsLoading} />
           <Banner2 className='' />
-          <ExpertChoice
-            className=''
-            products={products}
-            productsLoading={productsLoading}
-          />
+          <ExpertChoice products={products} productsLoading={productsLoading} />
           {/* <NicheExplorer /> */}
           <Trending />
           <Banner3 className='' />

@@ -1,17 +1,23 @@
 "use client";
 
-import React, { useEffect, useMemo } from "react";
-import Container from "../shared/Container";
+import React, { ReactNode, useMemo } from "react";
 import Image from "next/image";
 import { AiFillStar } from "react-icons/ai";
 import { useRouter } from "next/navigation";
-import { useGetProductsQuery } from "@/services/product/productApi";
+import Container from "../shared/Container";
 import ExpertCard from "../shared/skeletonLoading/ExpertCard";
-import { toast } from "react-hot-toast";
-import { useAppSelector } from "@/redux/hooks";
 import { capitalizeFirstLetter } from "@/utils/helper";
+import { IProduct } from "@/redux/@types/product";
 
-const ExpertChoice = ({ products, productsLoading, className }) => {
+const ExpertChoice = ({
+  products,
+  productsLoading,
+  className,
+}: {
+  products: IProduct[];
+  productsLoading: boolean;
+  className?: string;
+}) => {
   const router = useRouter();
 
   const featured = useMemo(
@@ -117,7 +123,15 @@ const ExpertChoice = ({ products, productsLoading, className }) => {
   );
 };
 
-function Badge({ props, children, className }) {
+function Badge({
+  props,
+  children,
+  className,
+}: {
+  props?: any;
+  children: ReactNode;
+  className?: string;
+}) {
   return (
     <span
       className={
