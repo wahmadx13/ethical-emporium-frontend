@@ -1,17 +1,25 @@
 "use client";
 
-import React from "react";
+import React, { ReactNode } from "react";
 import { AiFillStar } from "react-icons/ai";
 import SoldOut from "../icons/SoldOut";
 import Arrival from "../icons/Arrival";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useSelector } from "react-redux";
 import { capitalizeFirstLetter } from "@/utils/helper";
+import { IProduct } from "@/redux/@types/product";
+import { useAppSelector } from "@/redux/hooks";
 
-const Card = ({ index, product, ...rest }) => {
+const Card = ({
+  index,
+  product,
+  ...rest
+}: {
+  index: number;
+  product: IProduct;
+}) => {
   const router = useRouter();
-  const user = useSelector((state) => state?.auth?.user);
+  const user = useAppSelector((state) => state.auth);
 
   return (
     <div
@@ -39,17 +47,17 @@ const Card = ({ index, product, ...rest }) => {
         <span className='text-xs bg-white/80 px-2.5 py-0.5 rounded-xl absolute bottom-4 right-4 cursor-not-allowed'>
           {product?.quantity === 0 && (
             <span className='flex flex-row gap-x-0.5 items-center'>
-              <SoldOut /> Out of stock
+              <SoldOut className='' /> Out of stock
             </span>
           )}
           {product?.newArrival && (
             <span className='flex flex-row gap-x-0.5 items-center'>
-              <Arrival /> Latest from Ethical Emporium
+              <Arrival className='' /> Latest from Ethical Emporium
             </span>
           )}
           {product?.quantity !== 0 && (
             <span className='flex flex-row gap-x-0.5 items-center'>
-              <Arrival /> Available! Grab it!
+              <Arrival className='' /> Available! Grab it!
             </span>
           )}
         </span>
@@ -99,7 +107,15 @@ const Card = ({ index, product, ...rest }) => {
   );
 };
 
-function Badge({ props, children, className }) {
+function Badge({
+  props,
+  children,
+  className,
+}: {
+  props?: any;
+  children: ReactNode;
+  className?: string;
+}) {
   return (
     <span
       className={
@@ -111,7 +127,17 @@ function Badge({ props, children, className }) {
   );
 }
 
-function Logo({ src, alt, props, className }) {
+function Logo({
+  src,
+  alt,
+  props,
+  className,
+}: {
+  src: string;
+  alt: string;
+  props?: any;
+  className?: ReactNode;
+}) {
   return (
     <Image
       {...props}
