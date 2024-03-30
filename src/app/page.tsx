@@ -35,11 +35,11 @@ export default function Home() {
           <Banner1 />
           <Steps />
           <NewArrivals products={products} productsLoading={productsLoading} />
-          <Banner2 className='' />
+          <Banner2 />
           <ExpertChoice products={products} productsLoading={productsLoading} />
           {/* <NicheExplorer /> */}
           <Trending products={products} productsLoading={productsLoading} />
-          <Banner3 className='' />
+          <Banner3 />
         </main>
       </Main>
     </>

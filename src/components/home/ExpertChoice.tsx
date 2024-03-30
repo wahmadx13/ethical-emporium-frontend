@@ -25,8 +25,6 @@ const ExpertChoice = ({
     [products]
   );
 
-  console.log("newArrivals", featured);
-
   return (
     <Container className={className ? className : ""}>
       <section className='flex flex-col gap-y-10'>

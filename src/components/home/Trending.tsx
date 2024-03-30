@@ -22,8 +22,6 @@ const Trending = ({
     () => products?.filter((product) => product?.trending === true) || [],
     [products]
   );
-
-  console.log("newArrivals", trending);
   return (
     <Container className=''>
       <section className='flex flex-col gap-y-10'>
