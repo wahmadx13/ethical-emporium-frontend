@@ -30,7 +30,7 @@ const NewArrivals = () => {
   }, [dispatch, products.length]);
 
   return (
-    <Container>
+    <Container className=''>
       <section className='flex flex-col gap-y-10'>
         <h1 className='text-4xl'>
           New Arrivals. <span className=''>New Equipment</span>
@@ -46,7 +46,11 @@ const NewArrivals = () => {
           ) : (
             <>
               {newArrivals?.slice(0, 4)?.map((product, index) => (
-                <Card key={product._id} index={index} product={product} />
+                <Card
+                  key={product._id.toString()}
+                  index={index}
+                  product={product}
+                />
               ))}
             </>
           )}
