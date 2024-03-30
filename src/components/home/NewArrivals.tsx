@@ -1,33 +1,24 @@
 "use client";
 
-import React, { useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 import Container from "../shared/Container";
 import Card from "../shared/Card";
 import ProductCard from "../shared/skeletonLoading/ProductCard";
-import { getAllProducts } from "@/redux/features/productSlice";
-import { useAppSelector, useAppDispatch } from "@/redux/hooks";
+import { IProduct } from "@/redux/@types/product";
 
-const NewArrivals = () => {
-  const dispatch = useAppDispatch();
-  const { products: allProducts, isLoading: productsLoading } = useAppSelector(
-    (state) => state.product
-  );
-  const products = useMemo(() => allProducts || [], [allProducts]);
+const NewArrivals = ({
+  products,
+  productsLoading,
+}: {
+  products: IProduct[];
+  productsLoading: boolean;
+}) => {
   const newArrivals = useMemo(
     () => products.filter((product) => product.newArrival === true) || [],
     [products]
   );
 
   console.log("newArrivals", newArrivals);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      if (!products.length) {
-        await dispatch(getAllProducts());
-      }
-    };
-    fetchProducts();
-  }, [dispatch, products.length]);
 
   return (
     <Container className=''>
