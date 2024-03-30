@@ -38,7 +38,7 @@ export default function Home() {
           <Banner2 className='' />
           <ExpertChoice products={products} productsLoading={productsLoading} />
           {/* <NicheExplorer /> */}
-          <Trending />
+          <Trending products={products} productsLoading={productsLoading} />
           <Banner3 className='' />
         </main>
       </Main>
