@@ -10,20 +10,15 @@ import { capitalizeFirstLetter } from "@/utils/helper";
 import { IProduct } from "@/redux/@types/product";
 
 const ExpertChoice = ({
-  products,
+  featured,
   productsLoading,
   className,
 }: {
-  products: IProduct[];
+  featured: IProduct[];
   productsLoading: boolean;
   className?: string;
 }) => {
   const router = useRouter();
-
-  const featured = useMemo(
-    () => products.filter((product) => product.featured === true) || [],
-    [products]
-  );
 
   return (
     <Container className={className ? className : ""}>

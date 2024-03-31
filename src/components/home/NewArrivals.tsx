@@ -7,17 +7,12 @@ import ProductCard from "../shared/skeletonLoading/ProductCard";
 import { IProduct } from "@/redux/@types/product";
 
 const NewArrivals = ({
-  products,
+  newArrivals,
   productsLoading,
 }: {
-  products: IProduct[];
+  newArrivals: IProduct[];
   productsLoading: boolean;
 }) => {
-  const newArrivals = useMemo(
-    () => products.filter((product) => product.newArrival === true) || [],
-    [products]
-  );
-
   return (
     <Container className=''>
       <section className='flex flex-col gap-y-10'>
@@ -44,7 +39,7 @@ const NewArrivals = ({
             </>
           )}
         </div>
-        {!productsLoading && products?.length === 0 && (
+        {!productsLoading && newArrivals?.length === 0 && (
           <p className='text-sm'>No products found</p>
         )}
       </section>

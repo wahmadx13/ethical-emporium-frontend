@@ -98,14 +98,6 @@ const Categories = () => {
                 onClick={() => setTab("brands")}>
                 Brands
               </button>
-              <button
-                type='button'
-                className={`text-xs px-2 py-1 border rounded ${
-                  tab === "stores" ? "!bg-black !text-white" : ""
-                }`}
-                onClick={() => setTab("blogs")}>
-                Blogs
-              </button>
             </div>
 
             <div className='h-full overflow-y-auto scrollbar-hide'>
@@ -124,7 +116,9 @@ const Categories = () => {
                           key={category?._id.toString()}
                           className='w-full flex flex-row items-start gap-x-2 p-2 border border-transparent hover:border-black rounded cursor-pointer'
                           onClick={() => {
-                            router.push("/products?category=" + category?._id);
+                            router.push(
+                              "/products?category=" + category?._id.toString()
+                            );
                             setIsOpen(false);
                           }}>
                           {/* <Image
@@ -170,7 +164,9 @@ const Categories = () => {
                           key={brand?._id.toString()}
                           className='w-full flex flex-row items-start gap-x-2 p-2 border border-transparent hover:border-black rounded cursor-pointer'
                           onClick={() => {
-                            router.push("/products?brand=" + brand?._id);
+                            router.push(
+                              "/products?brand=" + brand?._id.toString()
+                            );
                             setIsOpen(false);
                           }}>
                           {/* <Image
@@ -198,58 +194,6 @@ const Categories = () => {
 
                   {!brandsLoading && brands?.length === 0 && (
                     <p className='text-xs'>Oops! No brands found!</p>
-                  )}
-                </>
-              )}
-              {tab === "blogs" && (
-                <>
-                  {blogsLoading || blogs?.length === 0 ? (
-                    <div className='flex flex-col gap-y-4'>
-                      {[1, 2, 3, 4, 5, 6].map((_, index) => (
-                        <CategoryCard key={index} />
-                      ))}
-                    </div>
-                  ) : (
-                    <>
-                      {blogs.map((blog) => (
-                        <div
-                          key={blog?._id.toString()}
-                          className='w-full flex flex-row items-start gap-x-2 p-2 border border-transparent hover:border-black rounded cursor-pointer'
-                          onClick={() => {
-                            router.push("/products?store=" + blog?._id);
-                            setIsOpen(false);
-                          }}>
-                          <Image
-                            src={blog.images[0].url}
-                            alt={blog.images[0].public_id}
-                            width={40}
-                            height={40}
-                            className='h-[40px] w-[40px] object-cover rounded'
-                          />
-                          <article className='whitespace-normal'>
-                            <h2 className='text-sm'>{blog?.title}</h2>
-                            <p
-                              className='text-xs line-clamp-2'
-                              dangerouslySetInnerHTML={{
-                                __html: blog.description,
-                              }}
-                            />
-                            <div className='flex justify-between align-middle mt-2'>
-                              <span className='text-[10px] bg-emerald-300/50 text-emerald-500 border border-emerald-500 px-1.5 rounded'>
-                                Likes: {blog.likes.length}
-                              </span>
-                              <span className='text-[10px] bg-purple-300/50 text-purple-500 border border-purple-500 px-1.5 rounded'>
-                                Dislikes: {blog.dislikes.length}
-                              </span>
-                            </div>
-                          </article>
-                        </div>
-                      ))}
-                    </>
-                  )}
-
-                  {!blogsLoading && blogs?.length === 0 && (
-                    <p className='text-xs'>Oops! No Blogs found!</p>
                   )}
                 </>
               )}

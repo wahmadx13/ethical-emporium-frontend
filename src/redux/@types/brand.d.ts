@@ -1,4 +1,4 @@
-interface IBrand {
+export interface IBrand {
   _id: Object;
   title: string;
   createdAt: Date;

@@ -19,7 +19,27 @@ export default function Home() {
   const { products: allProducts, isLoading: productsLoading } = useAppSelector(
     (state) => state.product
   );
+
+  //All Products
   const products = useMemo(() => allProducts || [], [allProducts]);
+
+  //Filtering New Arrival Products
+  const newArrivals = useMemo(
+    () => products.filter((product) => product.newArrival === true) || [],
+    [products]
+  );
+
+  //Filtering Featured Products
+  const featured = useMemo(
+    () => products.filter((product) => product.featured === true) || [],
+    [products]
+  );
+
+  //Filtering Trending Products
+  const trending = useMemo(
+    () => products?.filter((product) => product?.trending === true) || [],
+    [products]
+  );
   useEffect(() => {
     const fetchProducts = async () => {
       if (!products.length) {
@@ -34,11 +54,14 @@ export default function Home() {
         <main className='flex flex-col gap-y-20 w-full'>
           <Banner1 />
           <Steps />
-          <NewArrivals products={products} productsLoading={productsLoading} />
+          <NewArrivals
+            newArrivals={newArrivals}
+            productsLoading={productsLoading}
+          />
           <Banner2 />
-          <ExpertChoice products={products} productsLoading={productsLoading} />
+          <ExpertChoice featured={featured} productsLoading={productsLoading} />
           {/* <NicheExplorer /> */}
-          <Trending products={products} productsLoading={productsLoading} />
+          <Trending trending={trending} productsLoading={productsLoading} />
           <Banner3 />
         </main>
       </Main>

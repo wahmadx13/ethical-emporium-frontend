@@ -13,7 +13,7 @@ import storeSlice from "@/features/store/storeSlice";
 import favoriteSlice from "@/features/favorite/favoriteSlice";
 import cartSlice from "@/features/cart/cartSlice";
 import purchaseSlice from "@/features/purchase/purchaseSlice";
-import filterSlice from "@/features/filter/filterSlice";
+import filterSlice from "../features/filterSlice";
 
 export const makeStore = () => {
   return configureStore({

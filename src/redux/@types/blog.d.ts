@@ -1,4 +1,4 @@
-interface IBlog {
+export interface IBlog {
   _id: Object;
   title: string;
   slug: string;

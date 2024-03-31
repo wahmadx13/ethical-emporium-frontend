@@ -11,17 +11,14 @@ import { toast } from "react-hot-toast";
 import { IProduct } from "@/redux/@types/product";
 
 const Trending = ({
-  products,
+  trending,
   productsLoading,
 }: {
-  products: IProduct[];
+  trending: IProduct[];
   productsLoading: boolean;
 }) => {
   const router = useRouter();
-  const trending = useMemo(
-    () => products?.filter((product) => product?.trending === true) || [],
-    [products]
-  );
+
   return (
     <Container className=''>
       <section className='flex flex-col gap-y-10'>
@@ -43,7 +40,7 @@ const Trending = ({
               </>
             ) : (
               <>
-                {products?.slice(-8)?.map((product, index) => (
+                {trending?.slice(-8)?.map((product, index) => (
                   <Card key={product?._id.toString()} product={product} />
                 ))}
               </>

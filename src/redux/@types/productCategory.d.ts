@@ -1,4 +1,4 @@
-interface IProductCategory {
+export interface IProductCategory {
   _id: Object;
   title: string;
   createdAt: Date;
