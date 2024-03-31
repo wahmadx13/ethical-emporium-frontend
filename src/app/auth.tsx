@@ -18,7 +18,6 @@ const Auth = ({
   const dispatch = useAppDispatch();
   amplifyInit();
   useEffect(() => {
-    console.log("userData", userData);
     dispatch(setUser(userData));
     dispatch(setJwtToken(jwtToken));
   }, [dispatch, jwtToken, userData]);

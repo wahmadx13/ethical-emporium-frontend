@@ -82,26 +82,34 @@ const FilterSidebar = () => {
               </>
             ) : (
               <>
-                {categories.map((category) => (
-                  <Link
-                    key={category._id.toString()}
-                    href={`/products?category=${category._id}&brand=${brand}`}>
-                    <label
-                      htmlFor={category._id.toString()}
-                      className='text-sm flex flex-row items-center gap-x-1.5'>
-                      <input
-                        type='radio'
-                        name='category'
-                        id={category._id.toString()}
-                        value={category.title}
-                        checked={category._id === filter.category}
-                        onChange={() => dispatch(setCategory(category._id))}
-                        className='rounded-secondary checked:bg-primary checked:text-black checked:outline-none checked:ring-0 checked:border-0 focus:outline-none focus:ring-0 focus:border-1 focus:text-black'
-                      />
-                      {category.title}
-                    </label>
-                  </Link>
-                ))}
+                {categories.map((category) => {
+                  return (
+                    <Link
+                      key={category._id.toString()}
+                      href={`/products?category=${category._id}&brand=${brand}`}>
+                      <label
+                        htmlFor={category._id.toString()}
+                        className='text-sm flex flex-row items-center gap-x-1.5'>
+                        <input
+                          type='radio'
+                          name='category'
+                          id={category._id.toString()}
+                          value={category.title}
+                          checked={
+                            category._id.toString() ===
+                            filter.category?._id.toString()
+                          }
+                          onChange={() => {
+                            console.log("dispatchingCategory", category);
+                            dispatch(setCategory(category));
+                          }}
+                          className='rounded-secondary checked:bg-primary checked:text-black checked:outline-none checked:ring-0 checked:border-0 focus:outline-none focus:ring-0 focus:border-1 focus:text-black'
+                        />
+                        {category.title}
+                      </label>
+                    </Link>
+                  );
+                })}
               </>
             )}
           </div>
@@ -131,10 +139,10 @@ const FilterSidebar = () => {
                         name='brand'
                         id={brand._id.toString()}
                         value={brand.title}
-                        checked={brand._id === filter.brand}
-                        onChange={() =>
-                          dispatch(setBrand(brand._id.toString()))
+                        checked={
+                          brand._id.toString() === filter.brand?._id.toString()
                         }
+                        onChange={() => dispatch(setBrand(brand))}
                         className='rounded-secondary checked:bg-primary checked:text-black checked:outline-none checked:ring-0 checked:border-0 focus:outline-none focus:ring-0 focus:border-1 focus:text-black'
                       />
                       {brand.title}

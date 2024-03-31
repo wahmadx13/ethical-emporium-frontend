@@ -1,4 +1,4 @@
-interface IProduct {
+export interface IProduct {
   _id: Object;
   title: string;
   slug: string;

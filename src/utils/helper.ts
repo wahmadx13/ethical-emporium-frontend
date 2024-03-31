@@ -24,3 +24,10 @@ export function capitalizeFirstLetter(str: string) {
 
   return result;
 }
+
+export function makeLowerCaseString(str: string) {
+  return str
+    ?.replace(/\s/g, "")
+    .replace(/[^\w\s]/gi, "")
+    .toLowerCase();
+}

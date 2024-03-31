@@ -1,5 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
 import { IFilterSlice } from "@/redux/@types/filter";
+import { IProductCategory } from "@/redux/@types/productCategory";
+import { IBrand } from "@/redux/@types/brand";
 
 const initialState: IFilterSlice = {
   category: null,
@@ -11,10 +14,10 @@ const filterSlice = createSlice({
   name: "filter",
   initialState,
   reducers: {
-    setCategory: (state, action) => {
+    setCategory: (state, action: PayloadAction<IProductCategory>) => {
       state.category = action.payload;
     },
-    setBrand: (state, action) => {
+    setBrand: (state, action: PayloadAction<IBrand>) => {
       state.brand = action.payload;
     },
 

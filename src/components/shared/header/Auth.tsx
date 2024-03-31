@@ -23,7 +23,6 @@ const Auth = () => {
 
   //Extracting initials from name for display purpose
   const nameArray = user?.name?.split(" ");
-  console.log("user", nameArray);
   const initials = nameArray?.map((name: string) => name.charAt(0));
   const combinedInitials = initials?.join("");
 
