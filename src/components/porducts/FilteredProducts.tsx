@@ -8,9 +8,10 @@ import ProductCard from "../shared/skeletonLoading/ProductCard";
 import { makeLowerCaseString } from "@/utils/helper";
 import { useAppSelector, useAppDispatch } from "@/redux/hooks";
 import { setBrand, setCategory } from "@/features/filter/filterSlice";
+import { IProduct } from "@/redux/@types/product";
 
 const FilteredProducts = () => {
-  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
   const filter = useAppSelector((state) => state.filter);
   const { products: allProducts, isLoading: productsLoading } = useAppSelector(
     (state) => state.product
