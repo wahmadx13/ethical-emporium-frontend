@@ -72,11 +72,7 @@ const Card = ({
           className='flex flex-col gap-y-4 cursor-pointer h-full'
           onClick={() =>
             router.push(
-              `/product?product_id=${
-                product?._id
-              }&product_title=${product?.title
-                .replace(/ /g, "-")
-                .toLowerCase()}}`
+              `/product?product_id=${product?._id}&product_title=${product?.slug}`
             )
           }>
           <h2 className='line-clamp-2 h-full'>{product?.title}</h2>

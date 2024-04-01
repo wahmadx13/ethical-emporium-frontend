@@ -1,24 +1,10 @@
-/**
- * Title: Write a program using JavaScript on Left
- * Author: Hasibul Islam
- * Portfolio: https://devhasibulislam.vercel.app
- * Linkedin: https://linkedin.com/in/devhasibulislam
- * GitHub: https://github.com/devhasibulislam
- * Facebook: https://facebook.com/devhasibulislam
- * Instagram: https://instagram.com/devhasibulislam
- * Twitter: https://twitter.com/devhasibulislam
- * Pinterest: https://pinterest.com/devhasibulislam
- * WhatsApp: https://wa.me/8801906315901
- * Telegram: devhasibulislam
- * Date: 24, October 2023
- */
-
+"use client";
 import React from "react";
 import LoadImage from "../shared/LoadImage";
-import Discount from "../icons/Discount";
 import SoldOut from "../icons/SoldOut";
 import Arrival from "../icons/Arrival";
 import DetailCard from "./DetailCard";
+import { capitalizeFirstLetter } from "@/utils/helper";
 
 const Left = ({ product }) => {
   // Function to determine the column span class
@@ -38,32 +24,30 @@ const Left = ({ product }) => {
     }
   }
 
-  const hashTags = [
-    ...(product?.category?.tags || []),
-    ...(product?.brand?.tags || []),
-    ...(product?.store?.tags || []),
-  ].filter((tag) => tag !== undefined);
+  const hashTags = [...(product?.tags || [])].filter(
+    (tag) => tag !== undefined
+  );
 
   return (
-    <section className="lg:col-span-6 md:col-span-6 col-span-12 flex flex-col gap-y-4">
-      <div className="flex flex-col gap-y-4">
+    <section className='lg:col-span-6 md:col-span-6 col-span-12 flex flex-col gap-y-4'>
+      <div className='flex flex-col gap-y-4'>
         <LoadImage
-          src={product.thumbnail?.url}
-          alt={product.thumbnail?.public_id}
+          src={product.images[0]?.url}
+          alt={product.images[0]?.public_id}
           width={480}
           height={200}
-          className="rounded w-full h-full object-cover"
+          className='rounded w-full h-full object-cover'
         />
-        <div className="grid grid-cols-12 gap-4">
-          {product?.gallery?.map((thumbnail, index) => (
+        <div className='grid grid-cols-12 gap-4'>
+          {product?.images?.map((image, index) => (
             <LoadImage
-              src={thumbnail?.url}
-              key={index}
-              alt={thumbnail?.public_id}
+              src={image?.url}
+              key={image.asset_id}
+              alt={image?.public_id}
               className={
                 "rounded object-cover max-w-full w-full h-full" +
                 " " +
-                getColumnSpanClass(index, product.gallery.length)
+                getColumnSpanClass(index, product.images.length)
               }
               width={480}
               height={200}
@@ -71,52 +55,54 @@ const Left = ({ product }) => {
           ))}
         </div>
       </div>
-      <article className="flex flex-col gap-y-4">
-        <div className="flex flex-row gap-x-2.5">
-          <Badge className="text-indigo-800 bg-indigo-100">
-            {product?.variations?.colors?.length + " " + "Colors"}
+      <article className='flex flex-col gap-y-4'>
+        <div className='flex flex-row gap-x-2.5'>
+          <Badge className='text-indigo-800 bg-indigo-100'>
+            {product?.color?.length + " " + "Colors"}
           </Badge>
-          <Badge className="text-purple-800 bg-purple-100">
-            {product?.variations?.sizes?.length + " " + "Sizes"}
-          </Badge>
-          {product?.campaign?.state === "discount" && (
+          {/* {product?.campaign?.state === "discount" && (
             <Badge className="text-cyan-800 bg-cyan-100 flex flex-row items-center gap-x-1">
               <Discount /> {product?.campaign?.title}
             </Badge>
-          )}
-          {product?.campaign?.state === "sold-out" && (
-            <Badge className="text-cyan-800 bg-cyan-100 flex flex-row items-center gap-x-1">
-              <SoldOut /> {product?.campaign?.title}
+          )} */}
+          {product?.quantity === 0 && (
+            <Badge className='text-cyan-800 bg-cyan-100 flex flex-row items-center gap-x-1'>
+              <SoldOut /> Out of stock
             </Badge>
           )}
-          {product?.campaign?.state === "arrival" && (
-            <Badge className="text-cyan-800 bg-cyan-100 flex flex-row items-center gap-x-1">
-              <Arrival /> {product?.campaign?.title}
+          {product?.newArrival && (
+            <Badge className='text-cyan-800 bg-cyan-100 flex flex-row items-center gap-x-1'>
+              <Arrival /> New Arrivals
             </Badge>
           )}
-          {product?.campaign?.state === "on-sale" && (
-            <Badge className="text-blue-800 bg-blue-100 flex flex-row items-center gap-x-1">
-              <Arrival /> {product?.campaign?.title}
+          {product?.trending && (
+            <Badge className='text-blue-800 bg-blue-100 flex flex-row items-center gap-x-1'>
+              <Arrival /> Hot in town
+            </Badge>
+          )}
+          {product?.featured && (
+            <Badge className='text-blue-800 bg-blue-100 flex flex-row items-center gap-x-1'>
+              <Arrival /> Expert&apos;s choice
             </Badge>
           )}
         </div>
-        <div className="flex flex-col gap-y-2.5">
+        <div className='flex flex-col gap-y-2.5'>
           <DetailCard
-            title={`From ${product?.category?.title} Category`}
-            content={product?.category?.keynotes}
+            title={`From ${capitalizeFirstLetter(product?.category)} Category`}
+            // content={product?.category?.keynotes}
           />
           <DetailCard
-            title={`From ${product?.brand?.title} Brand`}
-            content={product?.brand?.keynotes}
-          />
-          <DetailCard
-            title={`From ${product?.store?.title} Store`}
-            content={product?.store?.keynotes}
+            title={`From ${capitalizeFirstLetter(product?.brand)} Brand`}
+            // content={product?.description}
           />
 
-          <div className="flex flex-row flex-wrap gap-1 mt-4">
+          <div className='flex flex-row flex-wrap gap-1 mt-4'>
             {hashTags.map((hashTag, index) => (
-              <span key={index} className="!text-xs border px-2 py-0.5 rounded-sm">{`#${hashTag}`}</span>
+              <span
+                key={index}
+                className='!text-xs border px-2 py-0.5 rounded-sm'>{`#${hashTag
+                .replace(/[^a-zA-Z0-9-]/g, "-")
+                .toLowerCase()}`}</span>
             ))}
           </div>
         </div>
@@ -131,8 +117,7 @@ function Badge({ props, children, className }) {
       className={
         "px-3 py-1 rounded text-xs w-fit" + (className ? " " + className : "")
       }
-      {...props}
-    >
+      {...props}>
       {children}
     </span>
   );
